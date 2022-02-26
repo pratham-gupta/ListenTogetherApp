@@ -80,7 +80,13 @@ function CreateRoomPage(props) {
     fetch("/api/create-room", requestOptions)
       .then(console.log(requestOptions))
       .then((response) => response.json())
-      .then((data) => console.log(data)); //redirect to room page using the code gotten in response.
+      // .then((data) => console.log(data))
+      // .then((data) => console.log(data.room_code))
+      .then((data) => {
+        console.log(data.room_code);
+        props.handlerRoomCode(data.room_code);
+        console.log(data);
+      }); //redirect to room page using the code gotten in response.
   };
 
   return (

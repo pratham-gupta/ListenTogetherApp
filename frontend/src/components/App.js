@@ -22,25 +22,42 @@ const center = {
 
 function App() {
   const [roomCode, setroomCode] = useState("null_value");
-  useEffect(() => {
-    async function getRoomCode() {
-      fetch("api/user-in-room")
-        .then((response) => response.json())
-        .then((data) => {
-          setroomCode(data.room_code);
-        })
-        .then(console.log(roomCode));
-    }
-  }, []);
+
+  function handlerRoomCode(e) {
+    console.log("room code handler called.");
+    console.log(typeof e);
+    setroomCode(e.target);
+    console.log("val of room code in app: ");
+    console.log(roomCode);
+  }
+
+  // useEffect(() => {
+  //   async function getRoomCode() {
+  //     fetch("api/user-in-room")
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         setroomCode(data.room_code);
+  //       })
+  //       .then(console.log(roomCode));
+  //   }
+  // }, []);
 
   return (
     <Router>
-      <div className={center}>
+      <div className="center">
         {/* <h1>React App.</h1> */}
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route path="/player" element={<YoutubePlayer />} />
-          <Route path="/create-room" element={<CreateRoomPage />} />
+          <Route
+            path="/create-room"
+            element={
+              <CreateRoomPage
+                roomCode={roomCode}
+                handlerRoomCode={handlerRoomCode}
+              />
+            }
+          />
           <Route
             path="/room/:roomCode"
             element={<Room roomCode={roomCode} />}
